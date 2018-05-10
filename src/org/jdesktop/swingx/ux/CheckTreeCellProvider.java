@@ -37,14 +37,9 @@ public class CheckTreeCellProvider extends ComponentProvider<JPanel> {
         DefaultMutableTreeTableNode node = (DefaultMutableTreeTableNode) arg0.getValue();
         Object obj = node.getUserObject();
         if(obj instanceof FieldEntity){
-            _label.setText(((FieldEntity) obj).getKey());
+//            _label.setText(((FieldEntity) obj).getKey());
             _checkBox.setSelector((FieldEntity) obj);
         }
-//// else
-//            if(obj instanceof ClassEntity){
-//            _label.setText(((ClassEntity) obj).getClassName());
-//            _checkBox.setSelector((ClassEntity) obj);
-//        }
 
 //        _label.setIcon(arg0.getIcon());
 
