@@ -73,7 +73,7 @@ public class MD5 {
     private static String md5(InputStream in) {
 
         try {
-            MessageDigest messagedigest = MessageDigest.getInstance("top.wuhaojie.se.translate.MD5");
+            MessageDigest messagedigest = MessageDigest.getInstance("MD5");
 
             byte[] buffer = new byte[1024];
             int read = 0;
