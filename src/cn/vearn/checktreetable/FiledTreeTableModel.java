@@ -14,8 +14,8 @@ import org.jdesktop.swingx.ux.CellProvider;
  */
 public class FiledTreeTableModel extends DefaultTreeTableModel {
 
-    private String[] _names = {" Key ", "Value", "Data Type", " Field name "};
-    private Class[] _types = {Object.class, Object.class, Object.class, Object.class};
+    private String[] _names = {" Key ", "Value"};
+    private Class[] _types = {Object.class, Object.class};
 
 
     public FiledTreeTableModel(TreeTableNode node) {

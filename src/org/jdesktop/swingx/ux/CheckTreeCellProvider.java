@@ -14,7 +14,6 @@ import javax.swing.tree.TreePath;
 import java.awt.*;
 
 /**
- *
  * @author vearn
  */
 public class CheckTreeCellProvider extends ComponentProvider<JPanel> {
@@ -36,8 +35,8 @@ public class CheckTreeCellProvider extends ComponentProvider<JPanel> {
         JTree tree = (JTree) arg0.getComponent();
         DefaultMutableTreeTableNode node = (DefaultMutableTreeTableNode) arg0.getValue();
         Object obj = node.getUserObject();
-        if(obj instanceof FieldEntity){
-//            _label.setText(((FieldEntity) obj).getKey());
+        if (obj instanceof FieldEntity) {
+            _label.setText(((FieldEntity) obj).getSource());
             _checkBox.setSelector((FieldEntity) obj);
         }
 

@@ -10,6 +10,7 @@ import org.jdesktop.swingx.JXTreeTable;
 import org.jdesktop.swingx.treetable.DefaultMutableTreeTableNode;
 import org.jdesktop.swingx.ux.CheckTreeTableManager;
 import top.wuhaojie.se.action.DataWriter;
+import top.wuhaojie.se.entity.FieldEntity;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
@@ -104,18 +105,15 @@ public class FieldsDialog extends JFrame {
     }
 
     private void createDataNode(DefaultMutableTreeTableNode root) {
-//        for (int i = 0; i < 8; i++) {
-//            FieldEntity entity = new FieldEntity();
-//            entity.setFieldName("FieldName");
-//            entity.setGenerate(true);
-//            entity.setKey("Key");
-//            entity.setType("type");
-//            entity.setValue("value");
-//
-//            DefaultMutableTreeTableNode node = new DefaultMutableTreeTableNode(entity);
-//            root.add(node);
-//            defaultMutableTreeTableNodeList.add(node);
-//        }
+        for (int i = 0; i < 8; i++) {
+            FieldEntity entity = new FieldEntity();
+            entity.setSource("source");
+            entity.setResult("result");
+
+            DefaultMutableTreeTableNode node = new DefaultMutableTreeTableNode(entity);
+            root.add(node);
+            defaultMutableTreeTableNodeList.add(node);
+        }
     }
 
 }
