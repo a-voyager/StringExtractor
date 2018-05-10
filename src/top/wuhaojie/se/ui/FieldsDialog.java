@@ -11,12 +11,14 @@ import org.jdesktop.swingx.treetable.DefaultMutableTreeTableNode;
 import org.jdesktop.swingx.ux.CheckTreeTableManager;
 import top.wuhaojie.se.action.DataWriter;
 import top.wuhaojie.se.entity.FieldEntity;
+import top.wuhaojie.se.entity.TaskHolder;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import java.util.List;
 
 import static javax.swing.ListSelectionModel.SINGLE_SELECTION;
 
@@ -34,13 +36,15 @@ public class FieldsDialog extends JFrame {
     private JLabel generateClass;
     private ArrayList<DefaultMutableTreeTableNode> defaultMutableTreeTableNodeList;
 
+    private TaskHolder taskHolder;
 
-    public FieldsDialog(PsiElementFactory factory,
-                        PsiClass psiClass, PsiFile file, Project project) {
+
+    public FieldsDialog(PsiElementFactory factory, PsiClass psiClass, PsiFile file, Project project, TaskHolder taskHolder) {
         this.factory = factory;
         this.file = file;
         this.project = project;
         this.psiClass = psiClass;
+        this.taskHolder = taskHolder;
         setContentPane(contentPane);
         setTitle("String Extractor");
         getRootPane().setDefaultButton(buttonOK);
@@ -105,12 +109,9 @@ public class FieldsDialog extends JFrame {
     }
 
     private void createDataNode(DefaultMutableTreeTableNode root) {
-        for (int i = 0; i < 8; i++) {
-            FieldEntity entity = new FieldEntity();
-            entity.setSource("source");
-            entity.setResult("result");
-
-            DefaultMutableTreeTableNode node = new DefaultMutableTreeTableNode(entity);
+        List<FieldEntity> fields = taskHolder.getFields();
+        for (FieldEntity field : fields) {
+            DefaultMutableTreeTableNode node = new DefaultMutableTreeTableNode(field);
             root.add(node);
             defaultMutableTreeTableNodeList.add(node);
         }

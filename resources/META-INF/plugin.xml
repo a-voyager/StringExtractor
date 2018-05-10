@@ -30,7 +30,7 @@
 
     <actions>
         <action id="StringExtractor" class="top.wuhaojie.se.MainAction" text="Extract String">
-            <add-to-group group-id="GenerateGroup" anchor="last"/>
+            <add-to-group group-id="RefactoringMenu" anchor="last"/>
             <keyboard-shortcut keymap="$default" first-keystroke="alt e"/>
         </action>
     </actions>

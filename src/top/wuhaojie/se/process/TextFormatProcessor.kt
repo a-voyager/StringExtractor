@@ -1,5 +1,7 @@
 package top.wuhaojie.se.process
 
+import top.wuhaojie.se.entity.TaskHolder
+
 object TextFormatProcessor {
 
     private val simpleWords = arrayOf(
@@ -10,7 +12,7 @@ object TextFormatProcessor {
     private fun removeSimpleWord(src: String): String {
         var result = src
         for (simpleWord in simpleWords) {
-            result = result.replace(" $simpleWord ", "")
+            result = result.replace(" $simpleWord ", " ")
         }
         return result
     }
@@ -36,6 +38,16 @@ object TextFormatProcessor {
         val removeSimpleWord = removeSimpleWord(src)
         val cleanText = cleanText(removeSimpleWord)
         return concat(cleanText)
+    }
+
+
+    fun process(taskHolder: TaskHolder) {
+        val fields = taskHolder.fields
+        for (i in IntRange(0, fields.size - 1)) {
+            val src = fields[i].result
+            val processText = processText(src)
+            fields[i].result = processText
+        }
     }
 
 }
