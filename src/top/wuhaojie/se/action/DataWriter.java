@@ -1,6 +1,5 @@
 package top.wuhaojie.se.action;
 
-import com.intellij.lang.xml.XMLLanguage;
 import com.intellij.openapi.application.RunResult;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
@@ -9,14 +8,13 @@ import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.MessageType;
-import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.*;
-import com.intellij.psi.codeStyle.JavaCodeStyleManager;
-import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.psi.xml.XmlComment;
-import com.intellij.psi.xml.XmlFile;
-import com.intellij.psi.xml.XmlTag;
+import com.intellij.psi.JavaPsiFacade;
+import com.intellij.psi.PsiClass;
+import com.intellij.psi.PsiElementFactory;
+import com.intellij.psi.PsiFile;
 import org.jetbrains.annotations.NotNull;
+import top.wuhaojie.se.entity.TaskHolder;
+import top.wuhaojie.se.process.StringsWriter;
 import top.wuhaojie.se.ui.Toast;
 
 import java.io.*;
@@ -33,13 +31,15 @@ public class DataWriter extends WriteCommandAction.Simple {
     private PsiElementFactory factory;
     private Project project;
     private PsiFile file;
+    private TaskHolder taskHolder;
 
-    public DataWriter(PsiFile file, Project project, PsiClass cls) {
+    public DataWriter(PsiFile file, Project project, PsiClass cls, TaskHolder taskHolder) {
         super(project, file);
         factory = JavaPsiFacade.getElementFactory(project);
         this.file = file;
         this.project = project;
         this.cls = cls;
+        this.taskHolder = taskHolder;
     }
 
     public void go() {
@@ -84,9 +84,9 @@ public class DataWriter extends WriteCommandAction.Simple {
         reader.close();
 
 
-        JavaCodeStyleManager styleManager = JavaCodeStyleManager.getInstance(project);
-        styleManager.optimizeImports(file);
-        styleManager.shortenClassReferences(cls);
+//        JavaCodeStyleManager styleManager = JavaCodeStyleManager.getInstance(project);
+//        styleManager.optimizeImports(file);
+//        styleManager.shortenClassReferences(cls);
 
 
         OutputStream outputStream = file.getVirtualFile().getOutputStream(this);
@@ -96,31 +96,9 @@ public class DataWriter extends WriteCommandAction.Simple {
         writer.write(newContent);
         writer.close();
 
+        StringsWriter stringsWriter = new StringsWriter(project);
+        stringsWriter.process(taskHolder);
 
-        VirtualFile workspaceFile = project.getBaseDir();
-        if (workspaceFile != null) {
-            VirtualFile stringsFile = workspaceFile.findFileByRelativePath("res/strings.xml");
-            PsiFile file = PsiManager.getInstance(project).findFile(stringsFile);
-            XmlFile xmlFile = (XmlFile) file;
-
-            XmlTag rootTag = xmlFile.getRootTag();
-
-
-            XmlElementFactory factory = XmlElementFactory.getInstance(project);
-            final XmlTag element = factory.createTagFromText("<comment><!-- " + "注释" + " --></comment>", XMLLanguage.INSTANCE);
-            final XmlComment newComment = PsiTreeUtil.getChildOfType(element, XmlComment.class);
-
-            rootTag.add(newComment);
-
-            for (int i = 0; i < 5; i++) {
-                XmlTag childTag = rootTag.createChildTag("string", "", "value", false);
-                childTag.setAttribute("name", "testtest");
-                rootTag.add(childTag);
-            }
-
-        }
-
-        FileDocumentManager.getInstance().saveAllDocuments();
 
     }
 

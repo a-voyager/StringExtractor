@@ -92,7 +92,7 @@ public class FieldsDialog extends JFrame {
 
             @Override
             public void run() {
-                DataWriter dataWriter = new DataWriter(file, project, psiClass);
+                DataWriter dataWriter = new DataWriter(file, project, psiClass, taskHolder);
                 dataWriter.go();
             }
         });
