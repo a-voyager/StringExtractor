@@ -1,5 +1,6 @@
 package top.wuhaojie.se.action;
 
+import com.intellij.lang.xml.XMLLanguage;
 import com.intellij.openapi.application.RunResult;
 import com.intellij.openapi.command.WriteCommandAction;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
@@ -10,14 +11,15 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.MessageType;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
+import com.intellij.psi.codeStyle.JavaCodeStyleManager;
+import com.intellij.psi.util.PsiTreeUtil;
+import com.intellij.psi.xml.XmlComment;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
 import org.jetbrains.annotations.NotNull;
 import top.wuhaojie.se.ui.Toast;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -31,7 +33,6 @@ public class DataWriter extends WriteCommandAction.Simple {
     private PsiElementFactory factory;
     private Project project;
     private PsiFile file;
-    private List<String> generateClassList = new ArrayList<>();
 
     public DataWriter(PsiFile file, Project project, PsiClass cls) {
         super(project, file);
@@ -64,9 +65,6 @@ public class DataWriter extends WriteCommandAction.Simple {
 
     @Override
     protected void run() throws Exception {
-        generateClassList.clear();
-
-
         FileDocumentManager.getInstance().saveAllDocuments();
 
         InputStream inputStream = file.getVirtualFile().getInputStream();
@@ -80,10 +78,15 @@ public class DataWriter extends WriteCommandAction.Simple {
         }
         String content = builder.toString();
 
-        String newContent = content.replaceAll("(\".*?\")", "context.getString()");
+        String newContent = content.replaceAll("(\".*?\")", "new HashMap().toString()");
 
 
         reader.close();
+
+
+        JavaCodeStyleManager styleManager = JavaCodeStyleManager.getInstance(project);
+        styleManager.optimizeImports(file);
+        styleManager.shortenClassReferences(cls);
 
 
         OutputStream outputStream = file.getVirtualFile().getOutputStream(this);
@@ -103,11 +106,17 @@ public class DataWriter extends WriteCommandAction.Simple {
             XmlTag rootTag = xmlFile.getRootTag();
 
 
-            XmlTag childTag = rootTag.createChildTag("string", "", "value", false);
-            childTag.setAttribute("name", "testtest");
+            XmlElementFactory factory = XmlElementFactory.getInstance(project);
+            final XmlTag element = factory.createTagFromText("<comment><!-- " + "注释" + " --></comment>", XMLLanguage.INSTANCE);
+            final XmlComment newComment = PsiTreeUtil.getChildOfType(element, XmlComment.class);
 
+            rootTag.add(newComment);
 
-            rootTag.addSubTag(childTag, false);
+            for (int i = 0; i < 5; i++) {
+                XmlTag childTag = rootTag.createChildTag("string", "", "value", false);
+                childTag.setAttribute("name", "testtest");
+                rootTag.add(childTag);
+            }
 
         }
 
