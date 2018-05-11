@@ -63,12 +63,16 @@ public class MainAction extends BaseGenerateAction {
         } else {
             return;
         }
+//
+//        ModuleManager instance = ModuleManager.getInstance(project);
+//        Module[] modules = instance.getModules();
+
 
         TaskHolder taskHolder = fieldFinder.find(psiFile);
 
-
         TranslateProcessor.INSTANCE.process(taskHolder);
         TextFormatProcessor.INSTANCE.process(taskHolder);
+        PrefixProcessor.INSTANCE.refreshDefaultPrefix(project, psiFile, taskHolder);
 
         FieldsDialog dialog = new FieldsDialog(factory, psiClass, psiFile, project, taskHolder);
         dialog.setSize(800, 500);

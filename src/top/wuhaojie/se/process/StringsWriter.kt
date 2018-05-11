@@ -34,7 +34,7 @@ class StringsWriter(
     }
 
     private fun writeContent(rootTag: XmlTag, taskHolder: TaskHolder) {
-        val fields = taskHolder.fields
+        val fields = taskHolder.selectedFields()
         for (field in fields) {
             val childTag = rootTag.createChildTag("string", "", field.source, false)
             childTag.setAttribute("name", field.result)

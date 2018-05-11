@@ -43,11 +43,12 @@ object TextFormatProcessor {
 
 
     fun process(taskHolder: TaskHolder) {
-        val fields = taskHolder.fields
+        val fields = taskHolder.selectedFields()
         for (i in IntRange(0, fields.size - 1)) {
             val src = fields[i].result
             val processText = processText(src)
             fields[i].result = processText
+            fields[i].resultSrc = processText
         }
     }
 

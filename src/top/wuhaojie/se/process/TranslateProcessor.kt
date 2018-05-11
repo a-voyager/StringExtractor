@@ -11,6 +11,7 @@ object TranslateProcessor {
             val source = fields[i].source
             val english = Translator.toEnglish(source)
             fields[i].result = english
+            fields[i].resultSrc = english
         }
     }
 

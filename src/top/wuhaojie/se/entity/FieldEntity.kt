@@ -7,7 +7,8 @@ data class FieldEntity(
 
         var source: String = "",
         var result: String = "",
-        var isSelected: Boolean = true
+        var isSelected: Boolean = true,
+        var resultSrc: String = ""
 
 ) : Selector, CellProvider {
 

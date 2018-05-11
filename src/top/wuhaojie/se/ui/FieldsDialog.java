@@ -12,11 +12,10 @@ import org.jdesktop.swingx.ux.CheckTreeTableManager;
 import top.wuhaojie.se.action.DataWriter;
 import top.wuhaojie.se.entity.FieldEntity;
 import top.wuhaojie.se.entity.TaskHolder;
+import top.wuhaojie.se.process.PrefixProcessor;
 
 import javax.swing.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +33,7 @@ public class FieldsDialog extends JFrame {
     private PsiFile file;
     private Project project;
     private JLabel generateClass;
+    private JTextField textPrefix;
     private ArrayList<DefaultMutableTreeTableNode> defaultMutableTreeTableNodeList;
 
     private TaskHolder taskHolder;
@@ -82,6 +82,17 @@ public class FieldsDialog extends JFrame {
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 onCancel();
+            }
+        });
+
+        textPrefix.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getID() == ActionEvent.ACTION_PERFORMED) {
+                    String text = e.getActionCommand();
+                    PrefixProcessor.INSTANCE.refreshPrefix(taskHolder, text);
+                    jxTreeTable.updateUI();
+                }
             }
         });
     }
