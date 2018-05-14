@@ -70,6 +70,7 @@ public class MainAction extends BaseGenerateAction {
 
         TaskHolder taskHolder = fieldFinder.find(psiFile);
 
+        FileProcessor.INSTANCE.process(project, psiFile, taskHolder);
         TranslateProcessor.INSTANCE.process(taskHolder);
         TextFormatProcessor.INSTANCE.process(taskHolder);
         PrefixProcessor.INSTANCE.refreshDefaultPrefix(project, psiFile, taskHolder);

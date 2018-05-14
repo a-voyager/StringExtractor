@@ -1,7 +1,6 @@
 package top.wuhaojie.se.process
 
 import com.intellij.lang.xml.XMLLanguage
-import com.intellij.openapi.fileEditor.FileDocumentManager
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiManager
 import com.intellij.psi.XmlElementFactory
@@ -13,16 +12,11 @@ import top.wuhaojie.se.entity.TaskHolder
 
 class StringsWriter(
         private val project: Project
-) {
+): AbsWriter() {
 
 
-    private fun saveAllFile() {
-        FileDocumentManager.getInstance().saveAllDocuments()
-    }
-
-    private fun openStringsFile(): XmlFile? {
-        val baseDir = project.baseDir ?: return null
-        val virtualFile = baseDir.findFileByRelativePath("res/strings.xml") ?: return null
+    private fun openStringsFile(taskHolder: TaskHolder): XmlFile? {
+        val virtualFile = taskHolder.desFile ?: return null
         return PsiManager.getInstance(project).findFile(virtualFile) as? XmlFile ?: return null
     }
 
@@ -45,7 +39,7 @@ class StringsWriter(
 
     fun process(taskHolder: TaskHolder) {
         saveAllFile()
-        val xmlFile = openStringsFile() ?: return
+        val xmlFile = openStringsFile(taskHolder) ?: return
         val rootTag = xmlFile.rootTag ?: return
         writeComment(rootTag, "开始")
         writeContent(rootTag, taskHolder)

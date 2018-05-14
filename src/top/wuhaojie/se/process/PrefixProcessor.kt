@@ -14,7 +14,8 @@ object PrefixProcessor {
         val module = ProjectRootManager.getInstance(project).fileIndex.getModuleForFile(virtualFile)
         val moduleName = if (module == null) "" else "${module.name.toLowerCase()}_"
         builder.append(moduleName)
-        val componentName = "${formatComponentName(virtualFile.name).toLowerCase()}_"
+        val name = virtualFile.name.split(".")[0]
+        val componentName = "${formatComponentName(name).toLowerCase()}_"
         builder.append(componentName)
         refreshPrefix(taskHolder, builder.toString())
     }

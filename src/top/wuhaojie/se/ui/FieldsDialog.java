@@ -35,7 +35,6 @@ public class FieldsDialog extends JFrame {
     private JLabel generateClass;
     private JTextField textPrefix;
     private JButton btnApplyPrefix;
-    private JTextField filePath;
     private ArrayList<DefaultMutableTreeTableNode> defaultMutableTreeTableNodeList;
 
     private TaskHolder taskHolder;

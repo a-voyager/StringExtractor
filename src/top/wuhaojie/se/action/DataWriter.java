@@ -2,22 +2,19 @@ package top.wuhaojie.se.action;
 
 import com.intellij.openapi.application.RunResult;
 import com.intellij.openapi.command.WriteCommandAction;
-import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.MessageType;
-import com.intellij.psi.JavaPsiFacade;
-import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiElementFactory;
-import com.intellij.psi.PsiFile;
+import com.intellij.psi.*;
+import com.intellij.psi.xml.XmlFile;
 import org.jetbrains.annotations.NotNull;
 import top.wuhaojie.se.entity.TaskHolder;
+import top.wuhaojie.se.process.JavaWriter;
 import top.wuhaojie.se.process.StringsWriter;
+import top.wuhaojie.se.process.XmlWriter;
 import top.wuhaojie.se.ui.Toast;
-
-import java.io.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -64,37 +61,15 @@ public class DataWriter extends WriteCommandAction.Simple {
     }
 
     @Override
-    protected void run() throws Exception {
-        FileDocumentManager.getInstance().saveAllDocuments();
+    protected void run() {
 
-        InputStream inputStream = file.getVirtualFile().getInputStream();
-
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-
-        String line;
-        StringBuilder builder = new StringBuilder();
-        while ((line = reader.readLine()) != null) {
-            builder.append(line).append('\n');
+        if (file instanceof PsiJavaFile) {
+            JavaWriter javaWriter = new JavaWriter();
+            javaWriter.process(taskHolder);
+        } else if (file instanceof XmlFile) {
+            XmlWriter xmlWriter = new XmlWriter();
+            xmlWriter.process(taskHolder);
         }
-        String content = builder.toString();
-
-        String newContent = content.replaceAll("(\".*?\")", "new HashMap().toString()");
-
-
-        reader.close();
-
-
-//        JavaCodeStyleManager styleManager = JavaCodeStyleManager.getInstance(project);
-//        styleManager.optimizeImports(file);
-//        styleManager.shortenClassReferences(cls);
-
-
-        OutputStream outputStream = file.getVirtualFile().getOutputStream(this);
-
-        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream));
-
-        writer.write(newContent);
-        writer.close();
 
         StringsWriter stringsWriter = new StringsWriter(project);
         stringsWriter.process(taskHolder);
