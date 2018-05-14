@@ -34,6 +34,8 @@ public class FieldsDialog extends JFrame {
     private Project project;
     private JLabel generateClass;
     private JTextField textPrefix;
+    private JButton btnApplyPrefix;
+    private JTextField filePath;
     private ArrayList<DefaultMutableTreeTableNode> defaultMutableTreeTableNodeList;
 
     private TaskHolder taskHolder;
@@ -85,14 +87,19 @@ public class FieldsDialog extends JFrame {
             }
         });
 
-        textPrefix.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (e.getID() == ActionEvent.ACTION_PERFORMED) {
-                    String text = e.getActionCommand();
-                    PrefixProcessor.INSTANCE.refreshPrefix(taskHolder, text);
-                    jxTreeTable.updateUI();
-                }
+        textPrefix.setText(taskHolder.getPrefix());
+        textPrefix.addActionListener(e -> {
+            if (e.getID() == ActionEvent.ACTION_PERFORMED) {
+                String text = e.getActionCommand();
+                PrefixProcessor.INSTANCE.refreshPrefix(taskHolder, text);
+                jxTreeTable.updateUI();
+            }
+        });
+        btnApplyPrefix.addActionListener(e -> {
+            if (e.getID() == ActionEvent.ACTION_PERFORMED){
+                String text = textPrefix.getText().trim();
+                PrefixProcessor.INSTANCE.refreshPrefix(taskHolder, text);
+                jxTreeTable.updateUI();
             }
         });
     }
