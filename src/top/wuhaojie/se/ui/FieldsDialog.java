@@ -6,6 +6,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElementFactory;
 import com.intellij.psi.PsiFile;
+import com.intellij.ui.JBColor;
 import org.jdesktop.swingx.JXTreeTable;
 import org.jdesktop.swingx.treetable.DefaultMutableTreeTableNode;
 import org.jdesktop.swingx.ux.CheckTreeTableManager;
@@ -15,7 +16,12 @@ import top.wuhaojie.se.entity.TaskHolder;
 import top.wuhaojie.se.process.PrefixProcessor;
 
 import javax.swing.*;
-import java.awt.event.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +40,9 @@ public class FieldsDialog extends JFrame {
     private Project project;
     private JLabel generateClass;
     private JTextField textPrefix;
-    private JButton btnApplyPrefix;
+    private JTextField etTemplate;
+    private JLabel labelTemplate;
+    private JLabel labelExample;
     private ArrayList<DefaultMutableTreeTableNode> defaultMutableTreeTableNodeList;
 
     private TaskHolder taskHolder;
@@ -94,13 +102,68 @@ public class FieldsDialog extends JFrame {
                 jxTreeTable.updateUI();
             }
         });
-        btnApplyPrefix.addActionListener(e -> {
-            if (e.getID() == ActionEvent.ACTION_PERFORMED){
-                String text = textPrefix.getText().trim();
+        textPrefix.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                onChanged();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                onChanged();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                onChanged();
+            }
+
+            private void onChanged() {
+                String text = textPrefix.getText();
                 PrefixProcessor.INSTANCE.refreshPrefix(taskHolder, text);
                 jxTreeTable.updateUI();
             }
         });
+
+        labelTemplate.setVisible(taskHolder.isJavaFile());
+        etTemplate.setVisible(taskHolder.isJavaFile());
+        labelExample.setVisible(taskHolder.isJavaFile());
+
+        etTemplate.setText(taskHolder.getJavaExtractTemplate());
+        etTemplate.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                onChanged();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                onChanged();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                onChanged();
+            }
+
+            private void onChanged() {
+                checkTemplate();
+            }
+        });
+        checkTemplate();
+    }
+
+    private void checkTemplate() {
+        String text = etTemplate.getText();
+        taskHolder.setJavaExtractTemplate(text);
+        if (!text.contains("$id")) {
+            labelExample.setForeground(JBColor.RED);
+            labelExample.setText("must contains \"$id\"");
+            return;
+        }
+        String templateEg = text.replace("$id", "R.id.simple_text");
+        labelExample.setForeground(JBColor.GRAY);
+        labelExample.setText("eg: " + templateEg);
     }
 
     private void onOK() {

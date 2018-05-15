@@ -13,9 +13,11 @@ class JavaWriter : AbsWriter() {
         val file = taskHolder.currentFile ?: return
         var content = readFileContent(file)
 
+        val extractTemplate = taskHolder.javaExtractTemplate
         for (field in taskHolder.selectedFields()) {
             val text = field.source
-            content = content.replace("\"$text\"", "context.getString(R.id.${field.result})")
+            val replace = extractTemplate.replace("\$id", "R.id.${field.result}")
+            content = content.replace("\"$text\"", replace)
         }
 
         writeFileContent(file, content)
