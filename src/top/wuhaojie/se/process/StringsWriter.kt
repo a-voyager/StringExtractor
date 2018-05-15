@@ -12,7 +12,7 @@ import top.wuhaojie.se.entity.TaskHolder
 
 class StringsWriter(
         private val project: Project
-): AbsWriter() {
+) : AbsWriter() {
 
 
     private fun openStringsFile(taskHolder: TaskHolder): XmlFile? {
@@ -41,7 +41,7 @@ class StringsWriter(
         saveAllFile()
         val xmlFile = openStringsFile(taskHolder) ?: return
         val rootTag = xmlFile.rootTag ?: return
-        writeComment(rootTag, "开始")
+        writeComment(rootTag, taskHolder.descTag)
         writeContent(rootTag, taskHolder)
         saveAllFile()
     }
