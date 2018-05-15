@@ -16,7 +16,7 @@ class JavaWriter : AbsWriter() {
         val extractTemplate = taskHolder.javaExtractTemplate
         for (field in taskHolder.selectedFields()) {
             val text = field.source
-            val replace = extractTemplate.replace("\$id", "R.id.${field.result}")
+            val replace = extractTemplate.replace("\$id", "R.string.${field.result}")
             content = content.replace("\"$text\"", replace)
         }
 

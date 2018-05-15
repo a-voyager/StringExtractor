@@ -161,7 +161,7 @@ public class FieldsDialog extends JFrame {
             labelExample.setText("must contains \"$id\"");
             return;
         }
-        String templateEg = text.replace("$id", "R.id.simple_text");
+        String templateEg = text.replace("$id", "R.string.simple_text");
         labelExample.setForeground(JBColor.GRAY);
         labelExample.setText("eg: " + templateEg);
     }
