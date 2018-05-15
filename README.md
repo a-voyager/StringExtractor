@@ -4,6 +4,8 @@
 
 帮助 Android 开发者一键释放字符串资源的 Android Studio 插件，[最新版本 v1.0](https://github.com/a-voyager/StringExtractor/raw/master/StringExtractor.zip )
 
+欢迎 Fork & Star
+
 ![se_xml_file.gif](http://7xqdz8.com1.z0.glb.clouddn.com/se_xml_file.gif)
 
 ## 为什么开发？
@@ -64,7 +66,7 @@ String Extractor 以 Android Studio 插件的形式提供，对项目零污染�
 ## 开源许可
     The MIT License (MIT)
     
-    Copyright (c) 2017 WuHaojie
+    Copyright (c) 2018 WuHaojie
     
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
