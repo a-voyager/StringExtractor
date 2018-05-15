@@ -2,7 +2,7 @@
 
 ![logo.png](http://7xqdz8.com1.z0.glb.clouddn.com/logo.png)
 
-帮助 Android 开发者一键释放字符串资源的 Android Studio 插件，[最新版本 v1.0](https://github.com/a-voyager/StringExtractor/raw/master/StringExtractor.zip )
+帮助 Android 开发者一键释放字符串资源的 Android Studio 插件，[最新版本 v1.0](https://github.com/a-voyager/StringExtractor/raw/master/release/StringExtractor.zip )
 
 欢迎 Fork & Star
 
@@ -28,7 +28,7 @@ String Extractor 以 Android Studio 插件的形式提供，对项目零污染�
 
 （1）安装
 
-点击[此处](https://github.com/a-voyager/StringExtractor/raw/master/StringExtractor.zip)下载 String Extractor 插件，在 Android Studio 中的 Plugins 页面中选择「Install plugin from disk」从本地安装，之后重启 Android Studio 生效
+点击[此处](https://github.com/a-voyager/StringExtractor/raw/master/release/StringExtractor.zip)下载 String Extractor 插件，在 Android Studio 中的 Plugins 页面中选择「Install plugin from disk」从本地安装，之后重启 Android Studio 生效
 
 （2）打开
 
