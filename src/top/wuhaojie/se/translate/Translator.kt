@@ -9,7 +9,7 @@ object Translator {
     }
 
     fun toEnglish(src: String): String {
-        val json = api.getTransResult(src, "auto", "en")
+        val json = api.getTransResult(src, "zh", "en")
         val response = JsonUtils.fromJson(json, TransResponse::class.java)
         if (response.trans_result.isNotEmpty()) {
             return response.trans_result[0].dst
