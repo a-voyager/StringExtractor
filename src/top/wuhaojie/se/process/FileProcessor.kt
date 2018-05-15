@@ -9,7 +9,7 @@ object FileProcessor {
 
 
     // src/main/res/values/strings.xml
-    private val defaultFilePath = "res/strings.xml"
+    private val defaultFilePath = "src/main/res/values/strings.xml"
 
     fun process(project: Project, psiFile: PsiFile, taskHolder: TaskHolder) {
         val virtualFile = psiFile.virtualFile

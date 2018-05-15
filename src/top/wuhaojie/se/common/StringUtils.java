@@ -47,4 +47,19 @@ public class StringUtils {
         return null;
     }
 
+    public static String underscoreString(String text) {
+        if (TextUtils.isEmpty(text)) {
+            return "";
+        }
+        StringBuilder builder = new StringBuilder();
+        char[] array = text.toCharArray();
+        for (int i = 0; i < array.length; i++) {
+            if (Character.isUpperCase(array[i]) && i != 0) {
+                builder.append('_');
+            }
+            builder.append(array[i]);
+        }
+        return builder.toString().toLowerCase();
+    }
+
 }

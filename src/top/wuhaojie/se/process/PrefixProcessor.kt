@@ -3,6 +3,7 @@ package top.wuhaojie.se.process
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.roots.ProjectRootManager
 import com.intellij.psi.PsiFile
+import top.wuhaojie.se.common.StringUtils
 import top.wuhaojie.se.entity.TaskHolder
 
 object PrefixProcessor {
@@ -15,13 +16,13 @@ object PrefixProcessor {
         val moduleName = if (module == null) "" else "${module.name.toLowerCase()}_"
         builder.append(moduleName)
         val name = virtualFile.name.split(".")[0]
-        val componentName = "${formatComponentName(name).toLowerCase()}_"
+        val componentName = "${formatComponentName(name)}_"
         builder.append(componentName)
         refreshPrefix(taskHolder, builder.toString())
     }
 
     private fun formatComponentName(name: String): String {
-        return name
+        return StringUtils.underscoreString(name)
     }
 
     fun refreshPrefix(taskHolder: TaskHolder, prefix: String) {

@@ -105,13 +105,10 @@ public class FieldsDialog extends JFrame {
 
     private void onOK() {
         this.setAlwaysOnTop(false);
-        WriteCommandAction.runWriteCommandAction(project, new Runnable() {
-
-            @Override
-            public void run() {
-                DataWriter dataWriter = new DataWriter(file, project, psiClass, taskHolder);
-                dataWriter.go();
-            }
+        WriteCommandAction.runWriteCommandAction(project, () -> {
+            setVisible(false);
+            DataWriter dataWriter = new DataWriter(file, project, psiClass, taskHolder);
+            dataWriter.go();
         });
     }
 
