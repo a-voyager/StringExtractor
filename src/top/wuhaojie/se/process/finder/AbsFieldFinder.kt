@@ -1,4 +1,4 @@
-package top.wuhaojie.se.process
+package top.wuhaojie.se.process.finder
 
 import com.intellij.openapi.fileEditor.FileDocumentManager
 import com.intellij.psi.PsiFile
@@ -33,11 +33,14 @@ abstract class AbsFieldFinder {
         taskHolder.fields = result
                 .map { it.value }
                 .map { transformToString(it) }
+                .filter { isDefaultChecked(it) }
                 .map { FieldEntity(it, "", true) }
                 .toList()
 
         return taskHolder
     }
+
+    abstract fun isDefaultChecked(it: String): Boolean
 
     abstract protected fun transformToString(it: String): String
 

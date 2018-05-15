@@ -53,6 +53,9 @@ public class CheckTreeCellProvider extends ComponentProvider<JPanel> {
                 _checkBox.setState(Boolean.FALSE);
             }
         }
+        if (obj instanceof FieldEntity) {
+            _checkBox.setState(((FieldEntity) obj).isSelected());
+        }
 
         //  使用BorderLayout布局，依次放置TristateCheckBox和JLabel
         rendererComponent.setLayout(new BorderLayout());

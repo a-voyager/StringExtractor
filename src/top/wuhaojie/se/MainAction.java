@@ -17,6 +17,9 @@ import com.intellij.psi.util.PsiUtilBase;
 import org.jetbrains.annotations.NotNull;
 import top.wuhaojie.se.entity.TaskHolder;
 import top.wuhaojie.se.process.*;
+import top.wuhaojie.se.process.finder.AbsFieldFinder;
+import top.wuhaojie.se.process.finder.JavaFieldFinder;
+import top.wuhaojie.se.process.finder.LayoutXmlFieldFinder;
 import top.wuhaojie.se.ui.FieldsDialog;
 
 public class MainAction extends BaseGenerateAction {

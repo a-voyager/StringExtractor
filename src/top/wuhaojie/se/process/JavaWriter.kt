@@ -13,7 +13,7 @@ class JavaWriter : AbsWriter() {
         val file = taskHolder.currentFile ?: return
         var content = readFileContent(file)
 
-        for (field in taskHolder.fields) {
+        for (field in taskHolder.selectedFields()) {
             val text = field.source
             content = content.replace("\"$text\"", "context.getString(R.id.${field.result})")
         }
