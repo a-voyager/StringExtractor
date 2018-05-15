@@ -2,7 +2,7 @@
 
 ![logo.png](http://7xqdz8.com1.z0.glb.clouddn.com/logo.png)
 
-帮助 Android 开发者一键释放字符串资源的 Android Studio 插件，[最新版本 v1.0](https://github.com/a-voyager/StringExtractor/raw/master/release/StringExtractor.zip )
+帮助 Android 开发者一键释放字符串资源的 Android Studio 插件，[最新版本 v1.0](https://github.com/a-voyager/StringExtractor/raw/master/release/StringExtractor.zip)
 
 欢迎 Fork & Star
 
