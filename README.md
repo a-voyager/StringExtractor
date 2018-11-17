@@ -1,12 +1,12 @@
 # String Extractor 插件
 
-![logo.png](http://7xqdz8.com1.z0.glb.clouddn.com/logo.png)
+![logo.png](http://cdn.wuhaojie.top/logo.png)
 
 帮助 Android 开发者一键释放字符串资源的 Android Studio 插件，[最新版本 v1.0](https://github.com/a-voyager/StringExtractor/raw/master/release/StringExtractor.zip)
 
 欢迎 Fork & Star
 
-![se_xml_file.gif](http://7xqdz8.com1.z0.glb.clouddn.com/se_xml_file.gif)
+![se_xml_file.gif](http://cdn.wuhaojie.top/se_xml_file.gif)
 
 ## 为什么开发？
 
@@ -34,17 +34,17 @@ String Extractor 以 Android Studio 插件的形式提供，对项目零污染�
 
 在包含字符串资源的 Java 文件或 XML 布局文件中，选择主菜单 Refactor -> Extract String 即可打开插件（推荐使用**快捷键 Alt + E**）
 
-![WX20180515-194758@2x.png](http://7xqdz8.com1.z0.glb.clouddn.com/WX20180515-194758@2x.png)
+![WX20180515-194758@2x.png](http://cdn.wuhaojie.top/WX20180515-194758@2x.png)
 
 （3）用法
 
 弹窗出现后，可以看到默认生成的字符串资源 ID，之后检查并修改资源 ID 前缀。如果是释放 Java 代码中的字符串，需要再检查并修改生成 Java 代码的模板。最后点击 OK，即可在 对应模块的 strings.xml 中生成字符串资源
 
-![WX20180515-195507@2x.png](http://7xqdz8.com1.z0.glb.clouddn.com/WX20180515-195507@2x.png)
+![WX20180515-195507@2x.png](http://cdn.wuhaojie.top/WX20180515-195507@2x.png)
 
 来一个动图展示：
 
-![se_java_file.gif](http://7xqdz8.com1.z0.glb.clouddn.com/se_java_file.gif)
+![se_java_file.gif](http://cdn.wuhaojie.top/se_java_file.gif)
 
 
 
