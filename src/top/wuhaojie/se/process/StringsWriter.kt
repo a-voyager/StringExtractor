@@ -37,14 +37,14 @@ class StringsWriter(
     }
 
 
-    fun process(taskHolder: TaskHolder) {
+    override fun process(taskHolder: TaskHolder) {
         if (taskHolder.selectedFields().isEmpty()) {
             return
         }
         saveAllFile()
         val xmlFile = openStringsFile(taskHolder) ?: return
         val rootTag = xmlFile.rootTag ?: return
-        writeComment(rootTag, taskHolder.descTag)
+//        writeComment(rootTag, taskHolder.descTag)
         writeContent(rootTag, taskHolder)
         saveAllFile()
     }

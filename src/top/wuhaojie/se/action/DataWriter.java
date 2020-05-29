@@ -10,7 +10,10 @@ import com.intellij.openapi.ui.MessageType;
 import com.intellij.psi.*;
 import com.intellij.psi.xml.XmlFile;
 import org.jetbrains.annotations.NotNull;
+import top.wuhaojie.se.config.Config;
+import top.wuhaojie.se.entity.StringContainerFileType;
 import top.wuhaojie.se.entity.TaskHolder;
+import top.wuhaojie.se.process.AbsWriter;
 import top.wuhaojie.se.process.JavaWriter;
 import top.wuhaojie.se.process.StringsWriter;
 import top.wuhaojie.se.process.XmlWriter;
@@ -63,17 +66,26 @@ public class DataWriter extends WriteCommandAction.Simple {
     @Override
     protected void run() {
 
-        if (file instanceof PsiJavaFile) {
-            JavaWriter javaWriter = new JavaWriter();
-            javaWriter.process(taskHolder);
-        } else if (file instanceof XmlFile) {
-            XmlWriter xmlWriter = new XmlWriter();
-            xmlWriter.process(taskHolder);
+        StringContainerFileType type = StringContainerFileType.Companion.findByName(file.getFileType().getName());
+
+        AbsWriter writer = null;
+        if (type == StringContainerFileType.JAVA || type == StringContainerFileType.KOTLIN) {
+            writer = new JavaWriter();
+        } else if (type == StringContainerFileType.XML) {
+            writer = new XmlWriter();
         }
+
+        if (writer == null) {
+            return;
+        }
+        writer.process(taskHolder);
 
         StringsWriter stringsWriter = new StringsWriter(project);
         stringsWriter.process(taskHolder);
 
+        Config.getInstance().putPrefix(taskHolder.getPrefix());
+        Config.getInstance().putTemplate(type, taskHolder.getExtractTemplate());
+        Config.getInstance().save();
 
     }
 

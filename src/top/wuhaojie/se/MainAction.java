@@ -2,8 +2,6 @@ package top.wuhaojie.se;
 
 import com.intellij.codeInsight.CodeInsightActionHandler;
 import com.intellij.codeInsight.generation.actions.BaseGenerateAction;
-import com.intellij.ide.highlighter.JavaFileType;
-import com.intellij.ide.highlighter.XmlFileType;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.editor.Editor;
@@ -15,12 +13,15 @@ import com.intellij.psi.PsiElementFactory;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.util.PsiUtilBase;
 import org.jetbrains.annotations.NotNull;
+import top.wuhaojie.se.entity.StringContainerFileType;
 import top.wuhaojie.se.entity.TaskHolder;
 import top.wuhaojie.se.process.*;
 import top.wuhaojie.se.process.finder.AbsFieldFinder;
 import top.wuhaojie.se.process.finder.JavaFieldFinder;
+import top.wuhaojie.se.process.finder.KotlinFieldFinder;
 import top.wuhaojie.se.process.finder.LayoutXmlFieldFinder;
 import top.wuhaojie.se.ui.FieldsDialog;
+import top.wuhaojie.se.utils.Log;
 
 public class MainAction extends BaseGenerateAction {
 
@@ -59,13 +60,32 @@ public class MainAction extends BaseGenerateAction {
 
         AbsFieldFinder fieldFinder;
         FileType fileType = psiFile.getFileType();
-        if (fileType instanceof XmlFileType) {
-            fieldFinder = new LayoutXmlFieldFinder();
-        } else if (fileType instanceof JavaFileType) {
-            fieldFinder = new JavaFieldFinder();
-        } else {
+
+
+        Log.d("当前文件类型", fileType.getName(), fileType.getDefaultExtension());
+
+        String fileTypeName = fileType.getName();
+
+        if (fileTypeName.isEmpty()) {
             return;
         }
+
+
+        StringContainerFileType type = StringContainerFileType.Companion.findByName(fileTypeName);
+        switch (type) {
+            case KOTLIN:
+                fieldFinder = new KotlinFieldFinder();
+                break;
+            case JAVA:
+                fieldFinder = new JavaFieldFinder();
+                break;
+            case XML:
+                fieldFinder = new LayoutXmlFieldFinder();
+                break;
+            default:
+                return;
+        }
+
 //
 //        ModuleManager instance = ModuleManager.getInstance(project);
 //        Module[] modules = instance.getModules();

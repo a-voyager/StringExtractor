@@ -1,6 +1,6 @@
 package top.wuhaojie.se.process.finder
 
-class JavaFieldFinder : AbsFieldFinder() {
+open class JavaFieldFinder : AbsFieldFinder() {
 
     override fun isDefaultChecked(it: String): Boolean {
         return it.isNotBlank()

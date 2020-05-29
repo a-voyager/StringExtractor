@@ -2,7 +2,10 @@ package top.wuhaojie.se.process.finder
 
 import com.intellij.openapi.fileEditor.FileDocumentManager
 import com.intellij.psi.PsiFile
+import top.wuhaojie.se.common.StringUtils
+import top.wuhaojie.se.config.Config
 import top.wuhaojie.se.entity.FieldEntity
+import top.wuhaojie.se.entity.StringContainerFileType
 import top.wuhaojie.se.entity.TaskHolder
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -36,6 +39,11 @@ abstract class AbsFieldFinder {
                 .filter { isDefaultChecked(it) }
                 .map { FieldEntity(it, "", true) }
                 .toList()
+
+
+        val type = StringContainerFileType.findByName(psiFile.fileType.name)
+        val template = Config.getInstance().getTemplate(type)
+        taskHolder.extractTemplate = if (StringUtils.isEmpty(template)) "getString(\$id)" else template
 
         return taskHolder
     }

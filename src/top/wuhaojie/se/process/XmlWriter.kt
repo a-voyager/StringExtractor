@@ -4,7 +4,7 @@ import top.wuhaojie.se.entity.TaskHolder
 
 class XmlWriter : AbsWriter() {
 
-    fun process(taskHolder: TaskHolder) {
+    override fun process(taskHolder: TaskHolder) {
         val file = taskHolder.currentFile ?: return
         var content = readFileContent(file)
 

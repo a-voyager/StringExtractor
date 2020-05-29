@@ -4,12 +4,18 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.roots.ProjectRootManager
 import com.intellij.psi.PsiFile
 import top.wuhaojie.se.common.StringUtils
+import top.wuhaojie.se.config.Config
 import top.wuhaojie.se.entity.TaskHolder
 
 object PrefixProcessor {
 
 
     fun refreshDefaultPrefix(project: Project, psiFile: PsiFile, taskHolder: TaskHolder) {
+        val localRecord = Config.getInstance().prefix
+        if (!StringUtils.isEmpty(localRecord)) {
+            refreshPrefix(taskHolder, localRecord)
+            return
+        }
         val builder = StringBuilder()
         val virtualFile = psiFile.virtualFile
         val module = ProjectRootManager.getInstance(project).fileIndex.getModuleForFile(virtualFile)

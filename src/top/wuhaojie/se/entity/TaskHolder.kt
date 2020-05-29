@@ -1,6 +1,5 @@
 package top.wuhaojie.se.entity
 
-import com.intellij.ide.highlighter.JavaFileType
 import com.intellij.openapi.vfs.VirtualFile
 
 data class TaskHolder(
@@ -9,14 +8,16 @@ data class TaskHolder(
         var currentFile: VirtualFile? = null,
         var desFile: VirtualFile? = null,
         var descTag: String = "START",
-        var javaExtractTemplate: String = "getString(\$id)"
+        var extractTemplate: String = ""
 ) {
     fun selectedFields(): List<FieldEntity> {
         return fields.filter { it.isSelected }
     }
 
-    fun isJavaFile(): Boolean {
-        return currentFile?.fileType is JavaFileType
+    fun isCodeFile(): Boolean {
+        val name = currentFile?.fileType?.name ?: return false
+        val type = StringContainerFileType.findByName(name)
+        return type == StringContainerFileType.KOTLIN || type == StringContainerFileType.JAVA
     }
 
 }

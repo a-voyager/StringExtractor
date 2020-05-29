@@ -5,7 +5,7 @@ import top.wuhaojie.se.entity.TaskHolder
 class JavaWriter : AbsWriter() {
 
 
-    fun process(taskHolder: TaskHolder) {
+    override fun process(taskHolder: TaskHolder) {
         write(taskHolder)
     }
 
@@ -13,7 +13,7 @@ class JavaWriter : AbsWriter() {
         val file = taskHolder.currentFile ?: return
         var content = readFileContent(file)
 
-        val extractTemplate = taskHolder.javaExtractTemplate
+        val extractTemplate = taskHolder.extractTemplate
         for (field in taskHolder.selectedFields()) {
             val text = field.source
             val replace = extractTemplate.replace("\$id", "R.string.${field.result}")

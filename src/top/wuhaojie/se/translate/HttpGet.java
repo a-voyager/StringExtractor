@@ -1,5 +1,7 @@
 package top.wuhaojie.se.translate;
 
+import top.wuhaojie.se.utils.Log;
+
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
@@ -16,6 +18,7 @@ import java.util.Map;
 
 class HttpGet {
 
+    private static final String TAG = "HttpGet";
     private static final int SOCKET_TIMEOUT = 10000; // 10S
     private static final String GET = "GET";
 
@@ -23,7 +26,7 @@ class HttpGet {
         try {
             // 设置SSLContext
             SSLContext sslcontext = SSLContext.getInstance("TLS");
-            sslcontext.init(null, new TrustManager[] { myX509TrustManager }, null);
+            sslcontext.init(null, new TrustManager[]{myX509TrustManager}, null);
 
             String sendUrl = getUrlWithQueryString(host, params);
 
@@ -37,6 +40,9 @@ class HttpGet {
 
             conn.setConnectTimeout(SOCKET_TIMEOUT); // 设置相应超时
             conn.setRequestMethod(GET);
+            if (conn.usingProxy()) {
+                Log.d(TAG, "使用代理");
+            }
             int statusCode = conn.getResponseCode();
             if (statusCode != HttpURLConnection.HTTP_OK) {
                 System.out.println("Http错误码：" + statusCode);
@@ -59,7 +65,7 @@ class HttpGet {
 
             return text;
         } catch (IOException | KeyManagementException | NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            Log.e(TAG, e, "网络请求失败");
         }
 
         return null;
@@ -110,7 +116,7 @@ class HttpGet {
 
     /**
      * 对输入的字符串进行URL编码, 即转换为%20这种形式
-     * 
+     *
      * @param input 原文
      * @return URL编码. 如果编码失败, 则返回原文
      */

@@ -125,11 +125,11 @@ public class FieldsDialog extends JFrame {
             }
         });
 
-        labelTemplate.setVisible(taskHolder.isJavaFile());
-        etTemplate.setVisible(taskHolder.isJavaFile());
-        labelExample.setVisible(taskHolder.isJavaFile());
+        labelTemplate.setVisible(taskHolder.isCodeFile());
+        etTemplate.setVisible(taskHolder.isCodeFile());
+        labelExample.setVisible(taskHolder.isCodeFile());
 
-        etTemplate.setText(taskHolder.getJavaExtractTemplate());
+        etTemplate.setText(taskHolder.getExtractTemplate());
         etTemplate.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -155,7 +155,8 @@ public class FieldsDialog extends JFrame {
 
     private void checkTemplate() {
         String text = etTemplate.getText();
-        taskHolder.setJavaExtractTemplate(text);
+        taskHolder.setExtractTemplate(text);
+        taskHolder.setPrefix(textPrefix.getText());
         if (!text.contains("$id")) {
             labelExample.setForeground(JBColor.RED);
             labelExample.setText("must contains \"$id\"");

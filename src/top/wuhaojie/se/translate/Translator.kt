@@ -1,5 +1,7 @@
 package top.wuhaojie.se.translate
 
+import top.wuhaojie.se.utils.Log
+
 object Translator {
 
     private val appId = "20180502000152597"
@@ -10,6 +12,10 @@ object Translator {
 
     fun toEnglish(src: String): String {
         val json = api.getTransResult(src, "zh", "en")
+        if (json.isNullOrEmpty()) {
+            Log.e("响应 JSON 为空")
+            return ""
+        }
         val response = JsonUtils.fromJson(json, TransResponse::class.java)
         if (response.trans_result.isNotEmpty()) {
             return response.trans_result[0].dst
