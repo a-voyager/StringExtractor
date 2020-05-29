@@ -4,14 +4,20 @@ import com.intellij.codeInsight.CodeInsightActionHandler;
 import com.intellij.codeInsight.generation.actions.BaseGenerateAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.fileTypes.FileType;
+import com.intellij.openapi.progress.ProgressIndicator;
+import com.intellij.openapi.progress.ProgressManager;
+import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.ui.MessageType;
 import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElementFactory;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.util.PsiUtilBase;
+import org.eclipse.jdt.internal.compiler.ProcessTaskManager;
 import org.jetbrains.annotations.NotNull;
 import top.wuhaojie.se.entity.StringContainerFileType;
 import top.wuhaojie.se.entity.TaskHolder;
@@ -21,6 +27,7 @@ import top.wuhaojie.se.process.finder.JavaFieldFinder;
 import top.wuhaojie.se.process.finder.KotlinFieldFinder;
 import top.wuhaojie.se.process.finder.LayoutXmlFieldFinder;
 import top.wuhaojie.se.ui.FieldsDialog;
+import top.wuhaojie.se.ui.Toast;
 import top.wuhaojie.se.utils.Log;
 
 public class MainAction extends BaseGenerateAction {
@@ -90,18 +97,35 @@ public class MainAction extends BaseGenerateAction {
 //        ModuleManager instance = ModuleManager.getInstance(project);
 //        Module[] modules = instance.getModules();
 
-
         TaskHolder taskHolder = fieldFinder.find(psiFile);
 
-        FileProcessor.INSTANCE.process(project, psiFile, taskHolder);
-        TranslateProcessor.INSTANCE.process(taskHolder);
-        TextFormatProcessor.INSTANCE.process(taskHolder);
-        PrefixProcessor.INSTANCE.refreshDefaultPrefix(project, psiFile, taskHolder);
+        ProgressManager.getInstance().run(new Task.Backgroundable(project, "translating") {
 
-        FieldsDialog dialog = new FieldsDialog(factory, psiClass, psiFile, project, taskHolder);
-        dialog.setSize(800, 500);
-        dialog.setLocationRelativeTo(null);
-        dialog.setVisible(true);
+            @Override
+            public void run(@NotNull ProgressIndicator progressIndicator) {
+                progressIndicator.setIndeterminate(true);
+
+                FileProcessor.INSTANCE.process(project, psiFile, taskHolder);
+                TranslateProcessor.INSTANCE.process(taskHolder);
+                TextFormatProcessor.INSTANCE.process(taskHolder);
+                PrefixProcessor.INSTANCE.refreshDefaultPrefix(project, psiFile, taskHolder);
+
+                ApplicationManager.getApplication().invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+
+
+                        FieldsDialog dialog = new FieldsDialog(factory, psiClass, psiFile, project, taskHolder);
+                        dialog.setSize(800, 500);
+                        dialog.setLocationRelativeTo(null);
+                        dialog.setVisible(true);
+
+                    }
+                });
+
+                progressIndicator.setIndeterminate(false);
+            }
+        });
 
 
     }
