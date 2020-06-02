@@ -35,18 +35,22 @@ abstract class AbsFieldFinder {
 
         taskHolder.fields = result
                 .map { it.value }
-                .map { transformToString(it) }
-                .filter { isDefaultChecked(it) }
-                .map { FieldEntity(it, "", true) }
+                .map {
+                    val source = transformToString(it)
+                    val checked = isDefaultChecked(source)
+                    buildField(source, checked)
+                }
                 .toList()
 
 
         val type = StringContainerFileType.findByName(psiFile.fileType.name)
         val template = Config.getInstance().getTemplate(type)
-        taskHolder.extractTemplate = if (StringUtils.isEmpty(template)) "getString(\$id)" else template
+        taskHolder.extractTemplate = if (StringUtils.isEmpty(template)) "getString(\$id, \$args)" else template
 
         return taskHolder
     }
+
+    protected open fun buildField(source: String, checked: Boolean) = FieldEntity(source = source, result = "", isSelected = checked, originSource = source)
 
     abstract fun isDefaultChecked(it: String): Boolean
 

@@ -99,7 +99,7 @@ public class MainAction extends BaseGenerateAction {
 
         TaskHolder taskHolder = fieldFinder.find(psiFile);
 
-        ProgressManager.getInstance().run(new Task.Backgroundable(project, "translating") {
+        ProgressManager.getInstance().run(new Task.Backgroundable(project, "String Extractor: translating") {
 
             @Override
             public void run(@NotNull ProgressIndicator progressIndicator) {

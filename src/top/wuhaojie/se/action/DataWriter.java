@@ -8,13 +8,12 @@ import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.MessageType;
 import com.intellij.psi.*;
-import com.intellij.psi.xml.XmlFile;
 import org.jetbrains.annotations.NotNull;
 import top.wuhaojie.se.config.Config;
 import top.wuhaojie.se.entity.StringContainerFileType;
 import top.wuhaojie.se.entity.TaskHolder;
 import top.wuhaojie.se.process.AbsWriter;
-import top.wuhaojie.se.process.JavaWriter;
+import top.wuhaojie.se.process.JavaKotlinWriter;
 import top.wuhaojie.se.process.StringsWriter;
 import top.wuhaojie.se.process.XmlWriter;
 import top.wuhaojie.se.ui.Toast;
@@ -70,7 +69,7 @@ public class DataWriter extends WriteCommandAction.Simple {
 
         AbsWriter writer = null;
         if (type == StringContainerFileType.JAVA || type == StringContainerFileType.KOTLIN) {
-            writer = new JavaWriter();
+            writer = new JavaKotlinWriter();
         } else if (type == StringContainerFileType.XML) {
             writer = new XmlWriter();
         }

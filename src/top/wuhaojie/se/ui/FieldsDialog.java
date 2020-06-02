@@ -13,6 +13,7 @@ import org.jdesktop.swingx.ux.CheckTreeTableManager;
 import top.wuhaojie.se.action.DataWriter;
 import top.wuhaojie.se.entity.FieldEntity;
 import top.wuhaojie.se.entity.TaskHolder;
+import top.wuhaojie.se.process.JavaKotlinWriter;
 import top.wuhaojie.se.process.PrefixProcessor;
 
 import javax.swing.*;
@@ -157,12 +158,18 @@ public class FieldsDialog extends JFrame {
         String text = etTemplate.getText();
         taskHolder.setExtractTemplate(text);
         taskHolder.setPrefix(textPrefix.getText());
-        if (!text.contains("$id")) {
+        if (!JavaKotlinWriter.Companion.getRES_ID_REGEX().containsMatchIn(text)) {
             labelExample.setForeground(JBColor.RED);
-            labelExample.setText("must contains \"$id\"");
+            labelExample.setText("must contains \"$id\", eg: getString($id, $args)");
             return;
         }
-        String templateEg = text.replace("$id", "R.string.simple_text");
+        String templateEg = text;
+        if (JavaKotlinWriter.Companion.getRES_ID_REGEX().containsMatchIn(templateEg)) {
+            templateEg = JavaKotlinWriter.Companion.getRES_ID_REGEX().replace(templateEg, "R.string.simple_text");
+        }
+        if (JavaKotlinWriter.Companion.getARGS_REGEX().containsMatchIn(templateEg)) {
+            templateEg = JavaKotlinWriter.Companion.replaceArgs(templateEg, "simpleField");
+        }
         labelExample.setForeground(JBColor.GRAY);
         labelExample.setText("eg: " + templateEg);
     }
