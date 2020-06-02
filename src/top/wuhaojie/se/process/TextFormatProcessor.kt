@@ -26,6 +26,8 @@ object TextFormatProcessor {
         result = result.replace('/', ' ')
         result = result.replace(':', ' ')
         result = result.replace('_', ' ')
+        result = result.replace('\'', ' ')
+        result = result.replace('\"', ' ')
         result = result.replace(Regex(" +"), " ")
         result = result.trim()
         result = result.toLowerCase()

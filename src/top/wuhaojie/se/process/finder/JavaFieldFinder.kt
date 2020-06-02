@@ -3,7 +3,7 @@ package top.wuhaojie.se.process.finder
 open class JavaFieldFinder : AbsFieldFinder() {
 
     override fun isDefaultChecked(it: String): Boolean {
-        return it.isNotBlank()
+        return it.isNotBlank() && isChinese(it)
     }
 
     override fun regex() = "\".*?\""

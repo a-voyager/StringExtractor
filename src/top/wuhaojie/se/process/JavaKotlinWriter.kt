@@ -15,6 +15,9 @@ class JavaKotlinWriter : AbsWriter() {
         fun replaceArgs(replacement: String, resourceArgs: String): String {
             var result = replacement
             result = result.replace(ARGS_REGEX) {
+                if (resourceArgs.isBlank()) {
+                    return@replace ""
+                }
                 val builder = StringBuilder()
                 if (it.groupValues[1].isNotBlank()) {
                     builder.append(", ")
@@ -44,7 +47,7 @@ class JavaKotlinWriter : AbsWriter() {
             val resourceId = "R.string.${field.result}"
             replacement = replacement.replace(RES_ID_REGEX, resourceId)
             // 参数: "title, subTitle, student.name, 10*5"
-            if (replacement.contains(ARGS_REGEX) && field.args.isNotEmpty()) {
+            if (replacement.contains(ARGS_REGEX)) {
                 val resourceArgs = buildArguments(field)
                 replacement = replaceArgs(replacement, resourceArgs)
             }
@@ -55,7 +58,7 @@ class JavaKotlinWriter : AbsWriter() {
     }
 
     private fun buildArguments(field: FieldEntity): String {
-        return field.args.joinToString(separator = ", ")
+        return if (field.args.isEmpty()) "" else field.args.joinToString(separator = ", ")
     }
 
 

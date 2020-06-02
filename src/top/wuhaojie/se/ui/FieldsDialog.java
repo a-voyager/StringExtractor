@@ -8,6 +8,7 @@ import com.intellij.psi.PsiElementFactory;
 import com.intellij.psi.PsiFile;
 import com.intellij.ui.JBColor;
 import org.jdesktop.swingx.JXTreeTable;
+import org.jdesktop.swingx.table.ColumnFactory;
 import org.jdesktop.swingx.treetable.DefaultMutableTreeTableNode;
 import org.jdesktop.swingx.ux.CheckTreeTableManager;
 import top.wuhaojie.se.action.DataWriter;
@@ -19,6 +20,7 @@ import top.wuhaojie.se.process.PrefixProcessor;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.table.TableColumn;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
@@ -68,7 +70,9 @@ public class FieldsDialog extends JFrame {
         JXTreeTable jxTreeTable = new JXTreeTable(new FiledTreeTableModel(createData()));
         CheckTreeTableManager manager = new CheckTreeTableManager(jxTreeTable);
         manager.getSelectionModel().addPathsByNodes(defaultMutableTreeTableNodeList);
-        jxTreeTable.getColumnModel().getColumn(0).setPreferredWidth(150);
+        TableColumn column = jxTreeTable.getColumnModel().getColumn(0);
+        column.setMinWidth(150);
+        column.setResizable(true);
 
 
         jxTreeTable.expandAll();

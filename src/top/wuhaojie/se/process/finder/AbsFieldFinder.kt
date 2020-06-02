@@ -40,6 +40,7 @@ abstract class AbsFieldFinder {
                     val checked = isDefaultChecked(source)
                     buildField(source, checked)
                 }
+                .filter { it.source.isNotBlank() }
                 .toList()
 
 
