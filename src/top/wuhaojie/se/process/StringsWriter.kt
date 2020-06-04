@@ -62,7 +62,10 @@ class StringsWriter(
 
             override fun visitElement(element: PsiElement) {
                 super.visitElement(element)
-                if (element.elementType != XmlElementType.XML_TAG) {
+//                if (element.elementType != XmlElementType.XML_TAG) {
+//                    return
+//                }
+                if (element !is XmlTag) {
                     return
                 }
                 val xmlTag = element as XmlTag
