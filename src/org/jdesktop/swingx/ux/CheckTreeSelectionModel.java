@@ -4,7 +4,11 @@
  */
 package org.jdesktop.swingx.ux;
 
+import cn.vearn.checktreetable.FiledTreeTableModel;
 import org.jdesktop.swingx.treetable.DefaultMutableTreeTableNode;
+import org.jdesktop.swingx.treetable.TreeTableNode;
+import top.wuhaojie.se.entity.FieldEntity;
+import top.wuhaojie.se.utils.Log;
 
 import javax.swing.tree.*;
 import java.util.ArrayList;
@@ -12,7 +16,6 @@ import java.util.List;
 import java.util.Stack;
 
 /**
- *
  * @author Santhosh Kumar T - santhosh@in.fiorano.com
  */
 public class CheckTreeSelectionModel extends DefaultTreeSelectionModel {
@@ -22,6 +25,39 @@ public class CheckTreeSelectionModel extends DefaultTreeSelectionModel {
     public CheckTreeSelectionModel(TreeModel model) {
         this.model = model;
         setSelectionMode(TreeSelectionModel.DISCONTIGUOUS_TREE_SELECTION);
+
+//
+//        try {
+//
+//            if (!(model instanceof FiledTreeTableModel)) {
+//                return;
+//            }
+//            FiledTreeTableModel tableModel = (FiledTreeTableModel) model;
+//            TreeTableNode root = tableModel.getRoot();
+//            if (root == null) {
+//                return;
+//            }
+//            ArrayList<TreeTableNode> selectedNodes = new ArrayList<>();
+//            for (int i = 0; i < root.getChildCount(); i++) {
+//                TreeTableNode node = root.getChildAt(i);
+//                if (!(node instanceof DefaultMutableTreeTableNode)) {
+//                    continue;
+//                }
+//                Object object = node.getUserObject();
+//                if (!(object instanceof FieldEntity)) {
+//                    continue;
+//                }
+//                FieldEntity entity = (FieldEntity) object;
+//                if (entity.isSelected()) {
+//                    selectedNodes.add(node);
+//                }
+//            }
+//            addPathsByNodes(selectedNodes);
+//
+//        } catch (Exception e) {
+//            Log.e(e);
+//        }
+
     }
 
     // tests whether there is any unselected node in the subtree of given path

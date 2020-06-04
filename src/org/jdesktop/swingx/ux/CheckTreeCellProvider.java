@@ -8,6 +8,7 @@ import org.jdesktop.swingx.renderer.CellContext;
 import org.jdesktop.swingx.renderer.ComponentProvider;
 import org.jdesktop.swingx.treetable.DefaultMutableTreeTableNode;
 import top.wuhaojie.se.entity.FieldEntity;
+import top.wuhaojie.se.utils.Log;
 
 import javax.swing.*;
 import javax.swing.tree.TreePath;
@@ -43,19 +44,19 @@ public class CheckTreeCellProvider extends ComponentProvider<JPanel> {
 //        _label.setIcon(arg0.getIcon());
 
         //  根据selectionModel中的状态来绘制TristateCheckBox的外观
-//        TreePath path = tree.getPathForRow(arg0.getRow());
-//        if (path != null) {
-//            if (selectionModel.isPathSelected(path, true)) {
-//                _checkBox.setState(Boolean.TRUE);
-//            } else if (selectionModel.isPartiallySelected(path)) {
-//                _checkBox.setState(null);   //  注意“部分选中”状态的API
-//            } else {
-//                _checkBox.setState(Boolean.FALSE);
-//            }
-//        }
-        if (obj instanceof FieldEntity) {
-            _checkBox.setState(((FieldEntity) obj).isSelected());
+        TreePath path = tree.getPathForRow(arg0.getRow());
+        if (path != null) {
+            if (selectionModel.isPathSelected(path, true)) {
+                _checkBox.setState(Boolean.TRUE);
+            } else if (selectionModel.isPartiallySelected(path)) {
+                _checkBox.setState(null);   //  注意“部分选中”状态的API
+            } else {
+                _checkBox.setState(Boolean.FALSE);
+            }
         }
+//        if (obj instanceof FieldEntity) {
+//            _checkBox.setState(((FieldEntity) obj).isSelected());
+//        }
 
         //  使用BorderLayout布局，依次放置TristateCheckBox和JLabel
         rendererComponent.setLayout(new BorderLayout());

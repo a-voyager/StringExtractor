@@ -40,7 +40,7 @@ class StringsWriter(
             val resValue = field.source
             if (stringResourceMap.containsKey(resKey) && stringResourceMap[resKey] == resValue) {
                 Log.d("repeat string key and value ", resKey, resValue)
-                return
+                continue
             }
             stringResourceMap[resKey] = resValue
             val childTag = rootTag.createChildTag("string", "", resValue, false)
