@@ -2,7 +2,7 @@
 
 ![logo.png](http://cdn.wuhaojie.top/logo.png)
 
-帮助 Android 开发者一键释放字符串资源的 Android Studio 插件，[最新版本 v1.0](https://github.com/a-voyager/StringExtractor/raw/master/release/StringExtractor.zip)
+帮助 Android 开发者一键提炼字符串资源的 Android Studio 插件，[最新版本 v1.0](https://github.com/a-voyager/StringExtractor/raw/master/release/StringExtractor.zip)
 
 欢迎 Fork & Star
 
@@ -10,17 +10,19 @@
 
 ## 为什么开发？
 
-在 Android 开发中，常常需要将字符串资源释放到项目的 res/values/strings.xml 文件中，面临：**来回切换文件**、**英文 ID 难取名**、**特定前缀重复工作多**等等的问题，不少 Android 开发者为之苦恼，故开发这样一款一键释放字符串资源的 Android Studio 插件 —— String Extractor
+在 Android 开发中，常常需要将字符串资源提炼到项目的 res/values/strings.xml 文件中，面临：**来回切换文件**、**英文 ID 难取名**、**特定前缀重复工作多**等等的问题，不少 Android 开发者为之苦恼，故开发这样一款一键提炼字符串资源的 Android Studio 插件 —— String Extractor
 
 ## 有什么用？
 
 String Extractor 以 Android Studio 插件的形式提供，对项目零污染，主要包含以下特性：
 
-（1）批量释放当前文件中的字符串资源
+（1）批量提炼当前文件中的字符串资源到 strings.xml
 
 （2）链接翻译 API，自动为字符串资源取英文 ID 名
 
-（3）支持自定义前缀名，便于匹配公司编码规范
+（3）支持自定义英文 ID 前缀名，以区分业务模块
+
+（4）适配 Kotlin，支持 Kotlin 模板格式字符串
 
 
 

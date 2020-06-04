@@ -1,19 +1,37 @@
 <idea-plugin>
-    <id>top.wuhaojie.plugin.se</id>
+    <id>com.voyager.plugin.se</id>
     <name>String Extractor</name>
-    <version>1.0</version>
+    <version>0.0.1</version>
+
+
+    <!--    <vendor></vendor>-->
     <vendor email="w19961009@126.com" url="https://github.com/a-voyager">Contact me</vendor>
 
     <description><![CDATA[
-      帮助 Android 开发者一键释放字符串资源的 Android Studio 插件
+    帮助 Android 开发者一键快速提炼字符串资源的 Android Studio 插件<br/>
+    <br/>
+    # 解决什么问题？<br/>
+    <br/>
+    在 Android 开发中，常常需要将字符串资源提炼到项目的 res/values/strings.xml 文件中，面临：来回切换文件、英文 ID 难取名、特定前缀重复工作多等的问题<br/>
+    <br/>
+    # 有哪些特性？<br/>
+    <br/>
+    （1）批量提炼当前文件中的字符串资源到 strings.xml<br/>
+    <br/>
+    （2）链接翻译 API，自动为字符串资源取英文 ID 名<br/>
+    <br/>
+    （3）支持自定义英文 ID 前缀名，以区分业务模块<br/>
+    <br/>
+    （4）适配 Kotlin，支持 Kotlin 模板格式字符串<br/>
+    <br/>
+
     ]]></description>
 
-    <change-notes><![CDATA[
-    ]]>
-    </change-notes>
+    <!--    <change-notes></change-notes>-->
 
     <idea-version since-build="173.0"/>
 
+    <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
     </extensions>
