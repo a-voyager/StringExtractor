@@ -47,7 +47,7 @@ String Extractor 以 Android Studio 插件的形式提供，对项目零污染�
 来一个动图展示：
 
 ![se_java_file.gif](http://cdn.wuhaojie.top/se_java_file.gif)
-
+![demo](https://cdn.wuhaojie.top/2020-06-23-string_extractor_demo_v2.gif)
 
 
 ## 还有疑问？
